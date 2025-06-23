@@ -2,6 +2,9 @@
 
 Vslot is a simple timetable management website that allows users to log in, register, and manage their schedules effectively. This project is built using HTML, CSS, and JavaScript, with Firebase for authentication and data storage.
 
+![Alt Text](https://github.com/SameerKumar24042004/Vslot-/blob/main/img/img1.png)
+
+
 ## Features
 
 - User registration and login (email/password & Google)
@@ -66,6 +69,12 @@ Open `frontend/src/index.html` in your browser. No build step is required.
 - View active users and send requests to access their timetables
 - Accept/reject requests from others in the Requests page
 - Only mutually accepted users can view, copy, or compare timetables
+
+
+## Interface 
+
+
+## Firebase 
 
 ## Contributing
 
