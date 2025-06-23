@@ -1,5 +1,7 @@
 # Vslot - Timetable Management Website
 
+🔗 Project URL: https://vslot-nu52.vercel.app/index.html
+
 Vslot is a simple timetable management website that allows users to log in, register, and manage their schedules effectively. This project is built using HTML, CSS, and JavaScript, with Firebase for authentication and data storage.
 
 ![Alt Text](https://github.com/SameerKumar24042004/Vslot-/blob/main/img/img1.png)
