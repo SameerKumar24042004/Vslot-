@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vslot - Timetable Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            font-family: 'Nunito Sans', sans-serif !important;
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+        }
+        
+        body {
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        .container {
+            display: flex;
+            height: 100vh;
+            position: relative;
+            z-index: 2;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            gap: 60px;
+            margin-top: 0;
+        }
+        
+        .hero-content {
+            color: white;
+            max-width: 500px;
+            text-align: left;
+        }
+        
+        .brand {
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+            opacity: 0.95;
+        }
+        
+        .hero-description {
+            font-size: 1rem;
+            opacity: 0.8;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        
+        .login-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .form-subtitle {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px 18px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: #aaa;
+        }
+        
+        .forgot-link {
+            display: block;
+            text-align: right;
+            margin-top: 8px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e5e9;
+            z-index: 1;
+        }
+        
+        .divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .btn-google {
+            width: 100%;
+            padding: 14px;
+            background: #fff;
+            color: #333;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .btn-google:hover {
+            border-color: #ccc;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .google-icon {
+            width: 20px;
+            height: 20px;
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIyLjU2IDEyLjI1QzIyLjU2IDExLjQ3IDIyLjQ5IDEwLjcyIDIyLjM2IDEwSDE2LjVWMTQuMjVIMTkuOTJDMTkuNzYgMTUuMzIgMTkuMTcgMTYuMjUgMTguMzEgMTYuOTFWMTkuNTlIMjAuNTdDMjEuNzEgMTguNTIgMjIuNTYgMTUuNTMgMjIuNTYgMTIuMjVaIiBmaWxsPSIjNDI4NUY0Ii8+CjxwYXRoIGQ9Ik0xNi41IDIyQzE5LjA5IDIyIDIxLjI2IDIxLjEgMjIuNTcgMTkuNTlMMjAuMzEgMTYuOTFDMTkuNTcgMTcuNDEgMTguNjEgMTcuNyAxNi41IDE3LjdDMTQuMDcgMTcuNyAxMi4wNCAxNi4zIDExLjM4IDEzLjY1SDkuMDNWMTYuNEM5Ljk2IDE4LjI5IDEyLjk3IDIyIDE2LjUgMjJaIiBmaWxsPSIjMzRBODUzIi8+CjxwYXRoIGQ9Ik0xMS4zOCAxMy42NUMxMS4xNSAxMi42NSAxMS4zNSAxMS4zOCAxMC4zNVY3LjY2SDkuMDNDOC4zOCA5LjA5IDggMTAuNTMgOCAxMkM4IDEzLjQ3IDguMzggMTQuOTEgOS4wMyAxNi4zNEwxMS4zOCAxMy42NVoiIGZpbGw9IiNGQkJDMDUiLz4KPHBhdGggZD0iTTE2LjUgNi4zQzE4Ljc3IDYuMyAyMC43NyA3LjExIDIyLjM1IDguNjZMMjQuNTMgNi40OEMyMS4yNiAzLjQyIDE4LjA5IDIgMTYuNSAyQzEyLjk3IDIgOS45NiA1LjcxIDkuMDMgNy42Nkw5LjAzIDcuNjZMMTEuMzggMTAuMzVDMTIuMDQgNy43IDE0LjA3IDYuMyAxNi41IDYuM1oiIGZpbGw9IiNFQTQzMzUiLz4KPC9zdmc+');
+            background-size: contain;
+        }
+        
+        .signup-link {
+            text-align: center;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .signup-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .register-form {
+            display: none;
+        }
+        
+        /* Mobile-first responsive design */
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .container {
+                flex-direction: column;
+                gap: 0;
+                padding: 20px;
+                height: auto;
+                min-height: 100vh;
+                justify-content: flex-start;
+                padding-top: 60px;
+            }
+            
+            .hero-content {
+                text-align: center;
+                max-width: 100%;
+                margin-bottom: 40px;
+                order: 1;
+            }
+            
+            .brand {
+                font-size: 1.8rem;
+                letter-spacing: 4px;
+                margin-bottom: 20px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+                line-height: 1.2;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 12px;
+            }
+            
+            .hero-description {
+                font-size: 0.95rem;
+                opacity: 0.9;
+                margin-bottom: 15px;
+            }
+            
+            .login-box {
+                max-width: 100%;
+                width: 100%;
+                padding: 30px 25px;
+                margin-bottom: 40px;
+                order: 2;
+            }
+            
+            .form-title {
+                font-size: 1.6rem;
+            }
+            
+            .form-input {
+                padding: 14px 16px;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            
+            .btn-primary {
+                padding: 15px;
+                font-size: 1rem;
+            }
+            
+            .btn-google {
+                padding: 13px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+                padding-top: 40px;
+            }
+            
+            .brand {
+                font-size: 1.5rem;
+                letter-spacing: 3px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-description {
+                font-size: 0.9rem;
+            }
+            
+            .login-box {
+                padding: 25px 20px;
+                border-radius: 16px;
+            }
+            
+            .form-title {
+                font-size: 1.4rem;
+            }
+            
+            .form-input {
+                padding: 12px 14px;
+            }
+            
+            .btn-primary {
+                padding: 14px;
+                font-size: 0.95rem;
+            }
+            
+            .btn-google {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Landscape orientation on mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .container {
+                flex-direction: row;
+                gap: 30px;
+                padding: 20px;
+                height: 100vh;
+                overflow-y: auto;
+            }
+            
+            .hero-content {
+                order: 1;
+                flex: 1;
+                margin-bottom: 0;
+            }
+            
+            .login-box {
+                order: 2;
+                flex: 1;
+                max-width: 400px;
+                margin-bottom: 0;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+        }
+        
+        /* Desktop styles (unchanged) */
+        @media (min-width: 769px) {
+            .container {
+                flex-direction: row;
+                gap: 60px;
+                padding: 40px;
+            }
+            
+            .hero-content {
+                text-align: left;
+                order: 1;
+            }
+            
+            .login-box {
+                order: 2;
+            }
+        }
+        
+        @media (min-width: 1200px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .brand {
+                font-size: 2.2rem;
+                letter-spacing: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="margin-top:0;">
+        <div class="hero-content">
+            <div class="brand">VSLOT</div>
+            <h1 class="hero-title">EXPLORE<br>HORIZONS</h1>
+            <h2 class="hero-subtitle">Where Your Academic Planning Becomes Reality.</h2>
+            <p class="hero-description">Embark on a journey where every corner of your schedule is within your reach. Manage, compare, and share with ease.</p>
+            <p class="hero-description" style="margin-top:18px;font-size:0.98rem;opacity:0.85;">
+            Created by Sameer Kumar &middot; 
+            <a href="mailto:sameerkumar202226@gamil.com" style="color:#fff;text-decoration:underline;opacity:0.95;">Contact</a>
+            </p>
+        </div>
+        <div class="login-box">
+            <!-- Login Form -->
+            <div id="loginFormBox">
+                <div class="form-header">
+                    <h2 class="form-title">Welcome Back</h2>
+                    <p class="form-subtitle">Sign in to your account</p>
+                </div>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-input" placeholder="••••••••••" required>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Sign In</button>
+                </form>
+                
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                
+                <button class="btn-google">
+                    <div class="google-icon"></div>
+                    Sign in with Google
+                </button>
+                
+                <div class="signup-link">
+                    Are you new? <a href="#" onclick="showRegister()">Create an Account</a>
+                </div>
+            </div>
+            
+            <!-- Register Form -->
+            <div id="registerFormBox" class="register-form">
+                <div class="form-header">
+                    <h2 class="form-title">Create Account</h2>
+                    <p class="form-subtitle">Join Vslot today</p>
+                </div>
+                
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="reg-username">Username</label>
+                        <input type="text" id="reg-username" name="username" class="form-input" placeholder="Choose a username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reg-email">Email</label>
+                        <input type="email" id="reg-email" name="email" class="form-input" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" name="password" class="form-input" placeholder="Create a password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reg-confirmPassword">Confirm Password</label>
+                        <input type="password" id="reg-confirmPassword" name="confirmPassword" class="form-input" placeholder="Confirm your password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Create Account</button>
+                </form>
+                
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                
+                <button class="btn-google">
+                    <div class="google-icon"></div>
+                    Sign up with Google
+                </button>
+                
+                <div class="signup-link">
+                    Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="userDropdownContainer"></div>
+
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-init.js"></script>
+
+    <script>
+        function showRegister() {
+            document.getElementById('loginFormBox').style.display = 'none';
+            document.getElementById('registerFormBox').style.display = 'block';
+        }
+        
+        function showLogin() {
+            document.getElementById('registerFormBox').style.display = 'none';
+            document.getElementById('loginFormBox').style.display = 'block';
+        }
+        
+        // Firebase login handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    window.location.href = 'dashboard.html';
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+        });
+        // Firebase register handler
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('reg-username').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirmPassword').value;
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    // Create user profile and default 'My table'
+                    const userRef = db.collection('users').doc(userCredential.user.uid);
+                    return userRef.set({
+                        username: username,
+                        email: email,
+                        requestsSent: [],
+                        requestsReceived: [],
+                        connections: []
+                    }).then(() => {
+                        // Create default 'My table' for this user
+                        return db.collection('timetables').doc(email).set({
+                            myTable: {
+                                name: 'My table',
+                                slots: []
+                            }
+                        }, { merge: true });
+                    });
+                })
+                .then(() => {
+                    // Only show success after both user and timetable are created
+                    alert('Registration successful! Please log in.');
+                    showLogin();
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+        });
+        // Google sign-in handler (for both login and register)
+        function handleGoogleSignIn() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then(async result => {
+                    const user = result.user;
+                    const userRef = db.collection('users').doc(user.uid);
+                    const userDoc = await userRef.get();
+                    if (!userDoc.exists || !userDoc.data().username) {
+                        // Prompt for username if new or missing
+                        showGoogleUsernameModal();
+                        document.getElementById('google-username-save').onclick = async function() {
+                            const username = document.getElementById('google-username-input').value.trim();
+                            if (!username) {
+                                alert('Please enter a username.');
+                                return;
+                            }
+                            await userRef.set({
+                                username: username,
+                                email: user.email
+                            });
+                            // Always create default 'My table' after username is set
+                            await db.collection('timetables').doc(user.email).set({
+                                myTable: {
+                                    name: 'My table',
+                                    slots: []
+                                }
+                            }, { merge: true });
+                            hideGoogleUsernameModal();
+                            window.location.href = 'dashboard.html';
+                        };
+                        return Promise.reject('Username required'); // Prevent redirect
+                    } else {
+                        // Also ensure 'My table' exists for existing users
+                        await db.collection('timetables').doc(user.email).set({
+                            myTable: {
+                                name: 'My table',
+                                slots: []
+                            }
+                        }, { merge: true });
+                    }
+                })
+                .then(() => {
+                    window.location.href = 'dashboard.html';
+                })
+                .catch(error => {
+                    if (error !== 'Username required') alert(error.message || error);
+                });
+        }
+        document.querySelectorAll('.btn-google').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                handleGoogleSignIn();
+            });
+        });
+        // Add modal for Google username completion
+        const googleUsernameModal = document.createElement('div');
+        googleUsernameModal.innerHTML = `
+        <div id="google-username-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:9999;align-items:center;justify-content:center;">
+            <div style="background:#fff;padding:32px 24px;border-radius:16px;max-width:350px;width:90%;margin:auto;box-shadow:0 8px 32px rgba(0,0,0,0.18);display:flex;flex-direction:column;align-items:center;">
+                <h3 style="margin-bottom:18px;">Complete Your Profile</h3>
+                <input id="google-username-input" type="text" placeholder="Choose a username" style="width:100%;padding:12px 10px;border-radius:8px;border:1.5px solid #e1e5e9;margin-bottom:18px;font-size:1rem;" />
+                <button id="google-username-save" style="background:#667eea;color:#fff;padding:10px 24px;border:none;border-radius:8px;font-weight:600;font-size:1rem;cursor:pointer;">Save</button>
+            </div>
+        </div>`;
+        document.body.appendChild(googleUsernameModal);
+        const showGoogleUsernameModal = () => {
+            document.getElementById('google-username-modal').style.display = 'flex';
+        };
+        const hideGoogleUsernameModal = () => {
+            document.getElementById('google-username-modal').style.display = 'none';
+        };
+    </script>
+</body>
+</html>

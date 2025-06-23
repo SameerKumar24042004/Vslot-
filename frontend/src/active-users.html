@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Active Users - Vslot</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-init.js"></script>
+    <script src="js/active-users.js" defer></script>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo"></div>
+                <span class="sidebar-title">Vslot</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li id="nav-dashboard" class="sidebar-link">Dashboard</li>
+                    <li id="nav-active-users" class="sidebar-link active">Active Users</li>
+                    <li id="nav-requests" class="sidebar-link">
+                        Requests
+                        <span id="requests-badge" style="display:none;margin-left:8px;background:#e3342f;color:#fff;border-radius:50%;padding:2px 10px;font-size:0.95em;vertical-align:middle;"></span>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-user">
+                <div class="sidebar-user-info">
+                    <div class="sidebar-user-avatar" id="sidebar-user-avatar"></div>
+                    <div>
+                        <div id="sidebar-user-name" class="sidebar-user-name" style="font-weight:600;font-size:1.05rem;"></div>
+                    </div>
+                </div>
+                <button id="sidebar-logout-btn" class="sidebar-logout-btn">Logout</button>
+            </div>
+        </aside>
+        <main class="dashboard-main">
+            <div class="dashboard-topbar">
+                <div class="dashboard-title">Active Users</div>
+            </div>
+            <div id="activeUsersSection"></div>
+        </main>
+    </div>
+    <script>
+        document.getElementById('nav-dashboard').onclick = function() {
+            window.location.href = 'dashboard.html';
+        };
+        document.getElementById('nav-active-users').onclick = function() {
+            window.location.href = 'active-users.html';
+        };
+        document.getElementById('nav-requests').onclick = function() {
+            window.location.href = 'requests.html';
+        };
+
+        // Logout button logic
+        document.getElementById('sidebar-logout-btn').onclick = function() {
+            firebase.auth().signOut().then(function() {
+                window.location.href = 'index.html';
+            });
+        };
+
+        // User info logic (show avatar and name)
+        firebase.auth().onAuthStateChanged(async function(user) {
+            if (user) {
+                // Fetch user doc from Firestore
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                const userData = userDoc.exists ? userDoc.data() : {};
+                // Set name
+                document.getElementById('sidebar-user-name').innerText = userData.username || user.displayName || user.email || '';
+                // Set avatar (first letter)
+                const avatar = document.getElementById('sidebar-user-avatar');
+                let letter = (userData.username || user.displayName || user.email || 'U')[0].toUpperCase();
+                avatar.innerHTML = `<div style="width:40px;
+                height:40px;
+                border-radius:50%;
+                background:#4f8cff;
+                display:flex;align-items:center;
+                justify-content:center;
+                font-size:1.5rem;
+                color:#fff;
+                font-weight:700;
+                ">${letter}</div>`;
+
+                // Fetch requestsReceived count
+                const reqCount = (userDoc.exists && Array.isArray(userDoc.data().requestsReceived)) ? userDoc.data().requestsReceived.length : 0;
+                const badge = document.getElementById('requests-badge');
+                if (badge) {
+                    if (reqCount > 0) {
+                        badge.textContent = reqCount;
+                        badge.style.display = 'inline-block';
+                    } else {
+                        badge.style.display = 'none';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

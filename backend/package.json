@@ -1,0 +1,22 @@
+{
+  "name": "vslot",
+  "version": "1.0.0",
+  "description": "Vslot is a simple timetable management website that allows users to log in, register, and manage their schedules effectively. This project is built using basic HTML, CSS, and JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "firebase": "^11.9.1",
+    "firebase-admin": "^13.4.0",
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.16.0"
+  }
+}
