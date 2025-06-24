@@ -91,7 +91,7 @@ Compare
 
 ![Alt Text](https://github.com/SameerKumar24042004/Vslot-/blob/main/img/img2.png)
 
-![Alt Text](https://github.com/SameerKumar24042004/Vslot-/blob/main/img/Data%20Storage.png)
+
 
 ![Alt Text](https://github.com/SameerKumar24042004/Vslot-/blob/main/img/users.png)
 
